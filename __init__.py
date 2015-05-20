@@ -1,9 +1,11 @@
 
 # h = hiveplot( G, filename )
 
-# h.add_axis( start, end )
+# an_axis = axis('main', 100, 400)
+# an_axis.add_node(n, 0.1)
+# an_axis.add_node(n1, 0.15)
 
-# h.axes[0].add_node( n, offset )
+# h.add_axis( an_axis )
 
 # h.save()
 
@@ -30,6 +32,7 @@ class axis:
         self.tag   = tag
         self.start = start
         self.end   = end
+        self.nodes = []
 
     def add_node(n, offset):
         self.nodes.append(n)
