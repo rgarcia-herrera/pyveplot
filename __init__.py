@@ -21,18 +21,28 @@ class hiveplot:
         self.axes = {}
 
     def draw_axes():
-        for tag in self.axes:
-            self.axes_lines.add( dwg.line( start = self.axes[tag].start,
-                                           end   = self.axes[tag].end ))
+        for axis in self.axes:
+            axis.draw()
+            self.dwg.add(axis.dwg)
 
 
 class axis:
     
-    def __init__( self, tag, start, end):
-        self.tag   = tag
+    def __init__( self, start, end):
         self.start = start
         self.end   = end
         self.nodes = []
+        self.dwg   = svgwrite.Drawing()
 
     def add_node(n, offset):
         self.nodes.append(n)
+        # calculate x,y from offset considering axis angle and size
+
+
+    def draw():
+        self.dwg.add( self.dwg.line( start = self.start,
+                                     end   = self..end ))
+        # draw my nodes
+
+        
+
