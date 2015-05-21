@@ -18,15 +18,32 @@ class hiveplot:
     def __init__( self, G, filename):
         self.dwg = svgwrite.Drawing(filename=filename, debug=True)
         self.axes_lines = self.dwg.add( self.dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
-        self.axes = []
+        self.axes  = []
+        self.nodes = {}
+        self.G = G
 
     def draw_axes(self):
         for axis in self.axes:
             self.axes_lines.add(axis.getDwg())
 
+    def draw_edges(self):
+        for a in self.axes:
+            for n in a.nodes.values():
+                self.nodes[n.ID] = n
+        
+        edges = self.dwg.add( self.dwg.g(id='edges', stroke='red', stroke_opacity='0.4'))
+        for e in self.G.edges():
+            n0 = self.nodes[e[0]]
+            n1 = self.nodes[e[1]]
+            edges.add(
+                self.dwg.line( start = (n0.x, n0.y),
+                               end   = (n1.x, n1.y)))
+
+            
     def save(self):
         self.draw_axes()
         self.dwg.add( self.axes_lines )
+        self.draw_edges()
         self.dwg.save()
 
 
@@ -79,3 +96,7 @@ class node:
                                      stroke = 'blue',
                                      stroke_width = 0))
         return self.dwg
+
+
+
+        
