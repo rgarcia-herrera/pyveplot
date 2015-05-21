@@ -17,18 +17,22 @@ class hiveplot:
 
     def __init__( self, G, filename):
         self.dwg = svgwrite.Drawing(filename=filename, debug=True)
-        self.axes_lines = self.dwg.add( dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
+        self.axes_lines = self.dwg.add( self.dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
         self.axes = []
 
-    def draw_axes():
+    def draw_axes(self):
         for axis in self.axes:
-            self.dwg.add(axis.getDwg())
+            self.axes_lines.add(axis.getDwg())
 
     def save(self):
         self.draw_axes()
+        self.dwg.add( self.axes_lines )
         self.dwg.save()
 
 
+
+
+        
 class axis:
     
     def __init__( self, start=(0,0), end=(0,0), nodes={}):
@@ -38,16 +42,16 @@ class axis:
         self.dwg   = svgwrite.Drawing()
 
 
-    def add_node(node, offset):
+    def add_node(self, node, offset):
         # calculate x,y from offset considering axis start and end points
-        width  = self.start[0] - self.end[0]
-        height = self.start[1] - self.end[1]        
+        width  = self.end[0] - self.start[0]
+        height = self.end[1] - self.start[1]        
         node.x = self.start[0] + (width * offset)
         node.y = self.start[1] + (height * offset)
         self.nodes[node.ID] = node
 
         
-    def draw():
+    def draw(self):
         # draw axis
         self.dwg.add( self.dwg.line( start = self.start,
                                      end   = self.end ))
@@ -55,7 +59,7 @@ class axis:
         for node in self.nodes.values():
             self.dwg.add( node.getDwg() )
 
-    def getDwg():
+    def getDwg(self):
         self.draw()
         return self.dwg
         
@@ -69,7 +73,7 @@ class node:
         self.r = 1*mm
         self.dwg   = svgwrite.Drawing()        
         
-    def getDwg():
+    def getDwg(self):
         self.dwg.add(self.dwg.circle(center = (self.x, self.y),
                                      r      = self.r,
                                      stroke = 'blue',
