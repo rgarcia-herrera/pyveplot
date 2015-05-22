@@ -35,9 +35,34 @@ class hiveplot:
         for e in self.G.edges():
             n0 = self.nodes[e[0]]
             n1 = self.nodes[e[1]]
-            edges.add(
-                self.dwg.line( start = (n0.x, n0.y),
-                               end   = (n1.x, n1.y)))
+            cmds = "M %s %s" % (n0.x, n0.y)
+            p3 = self.dwg.path(d=cmds, stroke_width=1, stroke='red', fill='none')
+
+            p3.push("C %s %s" % (n0.x, (n1.y + n0.y) * 0.4))
+            p3.push("%s %s" % ((n0.x + n1.x) * 0.4, n1.y))
+
+            p3.push("%s %s" % (n1.x, n1.y))
+            edges.add(p3)
+            # edges.add(
+            #     self.dwg.line( start = (n0.x, n0.y),
+            #                    end   = (n1.x, n1.y)))
+            
+
+    def connect(axis0, n0_index, h0, axis1, n1_index, h1):
+        n0 = self.axes[axis0].nodes[n0_index]
+        n1 = self.axes[axis1].nodes[n1_index]
+
+        cmds = "M %s %s" % (n0.x, n0.y) # source
+        pth  = self.dwg.path(d=cmds, stroke_width=1, stroke='red', fill='none')
+
+        magX = n0.x - axis.start[0]
+        magy = n0.y - axis.start[1]
+
+        pth.push("C %s %s" % (n0.x, (n1.y + n0.y) * 0.4)) # first  control point
+        pth.push("%s %s" % ((n0.x + n1.x) * 0.4, n1.y))   # second control point
+
+        pth.push("%s %s" % (n1.x, n1.y)) # target
+        edges.add(pth)
 
             
     def save(self):
