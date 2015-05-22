@@ -5,7 +5,7 @@ g = nx.erdos_renyi_graph(10,0.3)
 
 h = hiveplot(g, 'aguas.svg')
 
-an_axis = axis( (10,10), (100,100))
+an_axis = axis( (0,0), (-100,-100))
 
 n = node(1)
 an_axis.add_node(n, 0.1)
@@ -16,7 +16,7 @@ an_axis.add_node(n, 0.999)
 
 
 
-another_axis = axis( (10,10), (-100,10) )
+another_axis = axis( (0,0), (-100,100) )
 
 n = node(4)
 another_axis.add_node(n, 0.1)
@@ -27,7 +27,7 @@ another_axis.add_node(n, 0.999)
 
 
 
-yet_another_axis = axis( (10,10), (10,-200) )
+yet_another_axis = axis( (0,0), (150,50) )
 
 n = node(7)
 yet_another_axis.add_node(n, 0.1)
