@@ -1,77 +1,35 @@
 from pyveplot import *                                                                                                                      
 import networkx as nx
+import random
+from itertools import combinations
 
-g = nx.erdos_renyi_graph(10,0.3)
+h = Hiveplot( 'aguas.svg')
 
-h = Hiveplot(g, 'aguas.svg')
+the_axes = [
+    Axis( (200,200), (300,100)),
+    Axis( (200,200), (300,300)),
+    Axis( (200,200), (10,310)) ]
 
-an_axis = Axis( (200,200), (300,100))
+for a in the_axes:
+    h.axes.append( a )
 
-n = Node(1)
-an_axis.add_node(n, 0.1)
-n = Node(2)
-an_axis.add_node(n, 0.5)
-n = Node(3)
-an_axis.add_node(n, 0.999)
+g = nx.erdos_renyi_graph(100,0.3)
 
-
-
-another_axis = Axis( (200,200), (300,300) )
-
-n = Node(4)
-another_axis.add_node(n, 0.1)
-n = Node(5)
-another_axis.add_node(n, 0.5)
-n = Node(6)
-another_axis.add_node(n, 0.999)
+for n in g.nodes():
+    n = Node(n)
+    a = random.choice(the_axes)
+    a.add_node(n, random.random())
 
 
 
-# yet_another_axis = axis( (300,300), (410,110) )
+for a in combinations(the_axes, 2):
+    a0 = a[0]
+    a1 = a[1]
 
-# n = node(7)
-# yet_another_axis.add_node(n, 0.1)
-# n = node(8)
-# yet_another_axis.add_node(n, 0.3)
-# n = node(9)
-# yet_another_axis.add_node(n, 0.6)
-# n = node(0)
-# yet_another_axis.add_node(n, 0.9)
-
-
-h.axes.append( an_axis )
-h.axes.append( another_axis )
-#h.axes.append( yet_another_axis )
-
-
-
-h.connect(an_axis, 1, 15,
-          another_axis, 4, -15)
-
-h.connect(an_axis, 1, 15,
-          another_axis, 5, -15)
-
-h.connect(an_axis, 1, 15,
-           another_axis, 6, -15)
-
-
-h.connect(an_axis, 2, 15,
-          another_axis, 4, -15)
-
-h.connect(an_axis, 2, 15,
-          another_axis, 5, -15)
-
-h.connect(an_axis, 2, 15,
-           another_axis, 6, -15)
-
-
-h.connect(an_axis, 3, 15,
-          another_axis, 4, -15)
-
-h.connect(an_axis, 3, 15,
-          another_axis, 5, -15)
-
-h.connect(an_axis, 3, 15,
-           another_axis, 6, -15)
+    for e in g.edges():
+        if (e[0] in a0.nodes) and (e[1] in a1.nodes):
+            h.connect(a0, e[0], 15,
+                      a1, e[1], 15)
+    
 
 h.save()
