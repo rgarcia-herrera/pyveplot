@@ -1,64 +1,29 @@
-
-# h = hiveplot( G, filename )
-
-# an_axis = axis( 100, 400)
-# an_axis.add_node(n, 0.1)
-# an_axis.add_node(n1, 0.15)
-
-# h.axes.append( an_axis )
-
-# h.save()
-
 import svgwrite
 from svgwrite import cm, mm
 from math import sin, cos, atan2, degrees, radians, tan, sqrt
-from pprint import pprint
+
 
 
 class Hiveplot:
 
-    def __init__( self, G, filename):
+    def __init__( self, filename):
         self.dwg = svgwrite.Drawing(filename=filename, debug=True)
         self.axes_lines = self.dwg.add( self.dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
         self.edges      = self.dwg.add( self.dwg.g(id='edges', stroke='red', stroke_opacity='0.4'))        
         self.axes  = []
-        self.nodes = {}
-        self.G = G
 
     def draw_axes(self):
         for axis in self.axes:
             self.axes_lines.add(axis.getDwg())
 
-    def draw_edges(self):
-        for a in self.axes:
-            for n in a.nodes.values():
-                self.nodes[n.ID] = n
-        
-        edges = self.dwg.add( self.dwg.g(id='edges', stroke='red', stroke_opacity='0.4'))
-        for e in self.G.edges():
-            n0 = self.nodes[e[0]]
-            n1 = self.nodes[e[1]]
-            cmds = "M %s %s" % (n0.x, n0.y)
-            p3 = self.dwg.path(d=cmds, stroke_width=1, stroke='red', fill='none')
-
-            p3.push("C %s %s" % (n0.x, (n1.y + n0.y) * 0.4))
-            p3.push("%s %s" % ((n0.x + n1.x) * 0.4, n1.y))
-
-            p3.push("%s %s" % (n1.x, n1.y))
-            edges.add(p3)
-            # edges.add(
-            #     self.dwg.line( start = (n0.x, n0.y),
-            #                    end   = (n1.x, n1.y)))
-            
-
     def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle):
-        
         n0    = axis0.nodes[n0_index]
         n1    = axis1.nodes[n1_index]
 
         pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y),  # source
-                             stroke_width=1,
-                             stroke='red',
+                             stroke_width='0.34',
+                             stroke_opacity='0.3',
+                             stroke='grey',
                              fill='none')
 
         # compute source control point
@@ -84,7 +49,6 @@ class Hiveplot:
     def save(self):
         self.draw_axes()
         self.dwg.add( self.axes_lines )
-        # self.draw_edges()
         self.dwg.save()
 
 
@@ -98,7 +62,6 @@ class Axis:
         self.end   = end
         self.nodes = nodes
         self.dwg   = svgwrite.Drawing()
-        self.length= sqrt( ((end[0]-start[0])**2) + ((end[1]-start[1])**2))
 
 
     def add_node(self, node, offset):
