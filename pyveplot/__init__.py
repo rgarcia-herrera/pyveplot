@@ -16,14 +16,14 @@ class Hiveplot:
         for axis in self.axes:
             self.axes_lines.add(axis.getDwg())
 
-    def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle):
+    def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, color):
         n0    = axis0.nodes[n0_index]
         n1    = axis1.nodes[n1_index]
 
         pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y),  # source
                              stroke_width='0.34',
                              stroke_opacity='0.3',
-                             stroke='grey',
+                             stroke=color,
                              fill='none')
 
         # compute source control point
@@ -57,10 +57,10 @@ class Hiveplot:
         
 class Axis:
     
-    def __init__( self, start=(0,0), end=(0,0), nodes={}):
+    def __init__( self, start=(0,0), end=(0,0)):
         self.start = start
         self.end   = end
-        self.nodes = nodes
+        self.nodes = {}
         self.dwg   = svgwrite.Drawing()
 
 
@@ -97,7 +97,7 @@ class Node:
         self.ID = ID
         self.x = 0
         self.y = 0
-        self.r = 1*mm
+        self.r = 2
         self.dwg   = svgwrite.Drawing()        
         
     def getDwg(self):
