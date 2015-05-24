@@ -11,13 +11,16 @@
 
 import svgwrite
 from svgwrite import cm, mm
+from math import sin, cos, atan2, degrees, radians, tan, sqrt
+from pprint import pprint
 
 
-class hiveplot:
+class Hiveplot:
 
     def __init__( self, G, filename):
         self.dwg = svgwrite.Drawing(filename=filename, debug=True)
         self.axes_lines = self.dwg.add( self.dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
+        self.edges      = self.dwg.add( self.dwg.g(id='edges', stroke='red', stroke_opacity='0.4'))        
         self.axes  = []
         self.nodes = {}
         self.G = G
@@ -48,40 +51,54 @@ class hiveplot:
             #                    end   = (n1.x, n1.y)))
             
 
-    def connect(axis0, n0_index, h0, axis1, n1_index, h1):
-        n0 = self.axes[axis0].nodes[n0_index]
-        n1 = self.axes[axis1].nodes[n1_index]
+    def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle):
+        
+        n0    = axis0.nodes[n0_index]
+        n1    = axis1.nodes[n1_index]
 
-        cmds = "M %s %s" % (n0.x, n0.y) # source
-        pth  = self.dwg.path(d=cmds, stroke_width=1, stroke='red', fill='none')
+        pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y),  # source
+                             stroke_width=1,
+                             stroke='red',
+                             fill='none')
 
-        magX = n0.x - axis.start[0]
-        magy = n0.y - axis.start[1]
+        # compute source control point
+        alfa = axis0.angle() + radians(source_angle)
+        length = sqrt( ((n0.x - axis0.start[0])**2) + ((n0.y-axis0.start[1])**2)) 
+        x = axis0.start[0] + length * cos(alfa);
+        y = axis0.start[1] + length * sin(alfa);
 
-        pth.push("C %s %s" % (n0.x, (n1.y + n0.y) * 0.4)) # first  control point
-        pth.push("%s %s" % ((n0.x + n1.x) * 0.4, n1.y))   # second control point
+        pth.push("C %s %s" % (x, y)) # first control point in path
+
+        # compute target control point
+        alfa = axis1.angle() + radians(target_angle)
+        length = sqrt( ((n1.x - axis1.start[0])**2) + ((n1.y-axis1.start[1])**2)) 
+        x = axis1.start[0] + length * cos(alfa);
+        y = axis1.start[1] + length * sin(alfa);
+        
+        pth.push("%s %s" % (x, y))   # second control point in path
 
         pth.push("%s %s" % (n1.x, n1.y)) # target
-        edges.add(pth)
+        self.edges.add(pth)
 
             
     def save(self):
         self.draw_axes()
         self.dwg.add( self.axes_lines )
-        self.draw_edges()
+        # self.draw_edges()
         self.dwg.save()
 
 
 
 
         
-class axis:
+class Axis:
     
     def __init__( self, start=(0,0), end=(0,0), nodes={}):
         self.start = start
         self.end   = end
         self.nodes = nodes
         self.dwg   = svgwrite.Drawing()
+        self.length= sqrt( ((end[0]-start[0])**2) + ((end[1]-start[1])**2))
 
 
     def add_node(self, node, offset):
@@ -104,10 +121,15 @@ class axis:
     def getDwg(self):
         self.draw()
         return self.dwg
-        
+
+    def angle (self):
+        xDiff = self.end[0] - self.start[0]
+        yDiff = self.end[1] - self.start[1]
+        return atan2(yDiff, xDiff)
 
 
-class node:
+
+class Node:
     def __init__(self, ID):
         self.ID = ID
         self.x = 0
