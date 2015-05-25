@@ -11,4 +11,4 @@ In the following example I've used a network created using
 [NetworkX](http://networkx.github.io/), but there is no dependency to
 it.
 
-
+<img src="example.png">
