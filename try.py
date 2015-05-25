@@ -5,9 +5,13 @@ import random
 
 h = Hiveplot( 'example.svg')
 
-axis0 = Axis( (200,200), (200,100))
-axis1 = Axis( (200,200), (300,300))
-axis2 = Axis( (200,200), (10,310))
+
+axis0 = Axis( (200,200), # start
+              (200,100), # end
+              stroke="grey", stroke_opacity="0.5") # pass SVG attributes of axes
+# define as many axes as you need
+axis1 = Axis( (200,200), (300,300), stroke="blue", stroke_opacity="0.3", stroke_width="1.5")
+axis2 = Axis( (200,200), (10,310), stroke="black", stroke_dasharray="1 1")
 
 h.axes.append( axis0 )
 h.axes.append( axis1 )
@@ -35,7 +39,7 @@ for n in g.nodes():
                                stroke = random.choice(['red','green','blue','purple']),
                                stroke_width = 0.1)
     else:
-        # nodes' drawings can be any svg shape
+        # nodes' drawings can be any SVG shape
         degree = float(nx.degree(g, n)) / 20.0
         nd.dwg = nd.dwg.rect(insert = (nd.x - (degree/2.0), nd.y - (degree/2.0)),
                              size   = (degree, degree),
@@ -49,12 +53,11 @@ for n in g.nodes():
 # edges from axis0 to axis1
 for e in g.edges():
     if (e[0] in axis0.nodes) and (e[1] in axis1.nodes):
-        # pass any SVG attributes to an edge
         h.connect(axis0, e[0],
                   45,  # source angle
                   axis1, e[1], 
                   -45, # target angle
-                  stroke_width='0.34',
+                  stroke_width='0.34',  # pass any SVG attributes to an edge
                   stroke_opacity='0.4',
                   stroke='purple',
                   fill='none')
@@ -76,9 +79,7 @@ for e in g.edges():
                   axis2, e[1], -15,
                   stroke_width='0.34',
                   stroke_opacity='0.4',
-                  stroke='blue',
+                  stroke=random.choice(['blue', 'red', 'purple', 'green', 'magenta']),
                   fill='none')
-
-    
 
 h.save()
