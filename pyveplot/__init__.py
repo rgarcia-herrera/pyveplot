@@ -7,15 +7,13 @@ from math import sin, cos, atan2, degrees, radians, tan, sqrt
 class Hiveplot:
 
     def __init__( self, filename):
-        self.dwg = svgwrite.Drawing(filename=filename, debug=True)
-        self.axes_lines = self.dwg.add( self.dwg.g(id='axes_lines', stroke="grey", stroke_opacity="0.5") )
-        self.edges      = self.dwg.add( self.dwg.g(id='edges', stroke='red', stroke_opacity='0.4'))        
+        self.dwg   = svgwrite.Drawing(filename=filename, debug=True)
         self.axes  = []
 
     def draw_axes(self):
         for axis in self.axes:
-            self.axes_lines.add(axis.getDwg())
-        self.dwg.add( self.axes_lines )
+            self.dwg.add(axis.getDwg())
+
 
 
     def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, **kwargs):
@@ -41,7 +39,7 @@ class Hiveplot:
         pth.push("%s %s" % (x, y))   # second control point in path
 
         pth.push("%s %s" % (n1.x, n1.y)) # target
-        self.edges.add(pth)
+        self.dwg.add(pth)
 
             
     def save(self):
@@ -54,11 +52,12 @@ class Hiveplot:
         
 class Axis:
     
-    def __init__( self, start=(0,0), end=(0,0)):
+    def __init__( self, start=(0,0), end=(0,0), **kwargs):
         self.start = start
         self.end   = end
         self.nodes = {}
         self.dwg   = svgwrite.Drawing()
+        self.attrs = kwargs
 
 
     def add_node(self, node, offset):
@@ -73,7 +72,8 @@ class Axis:
     def draw(self):
         # draw axis
         self.dwg.add( self.dwg.line( start = self.start,
-                                     end   = self.end ))
+                                     end   = self.end,
+                                     **self.attrs ))
         # draw my nodes
         for node in self.nodes.values():
             self.dwg.add( node.getDwg() )
