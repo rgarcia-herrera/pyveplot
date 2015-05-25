@@ -1,47 +1,65 @@
-from pyveplot import *                                                                                                                      
+from pyveplot import *
 import networkx as nx
 import random
-from itertools import combinations
 
-h = Hiveplot( 'aguas.svg')
 
-the_axes = [
-    Axis( (200,200), (200,100)),
-    Axis( (200,200), (300,300)),
-    Axis( (200,200), (10,310)) ]
+h = Hiveplot( 'example.svg')
 
-for a in the_axes:
-    h.axes.append( a )
+axis0 = Axis( (200,200), (200,100))
+axis1 = Axis( (200,200), (300,300))
+axis2 = Axis( (200,200), (10,310))
 
+h.axes.append( axis0 )
+h.axes.append( axis1 )
+h.axes.append( axis2 )
+
+
+# a random network
 g = nx.erdos_renyi_graph(100,0.3)
 
+# distribute nodes in axes
+the_axes = [ axis0,
+             axis1,
+             axis2, ]
 for n in g.nodes():
     n = Node(n)
     a = random.choice(the_axes)
+    # at random offsets
     a.add_node(n, random.random())
 
 
 
-for a in combinations(the_axes, 2):
-    a0 = a[0]
-    a1 = a[1]
 
-    if a0.end == (200,100) and a1.end == (300,300):
-        sa = 15
-        ta = -15
-    if a0.end == (200,100) and a1.end == (10,310):
-        sa = -15
-        ta = 15
-    if a0.end == (300,300) and a1.end == (10,310):
-        sa = 15
-        ta = -15
+# edges from axis0 to axis1
+for e in g.edges():
+    if (e[0] in axis0.nodes) and (e[1] in axis1.nodes):
+        h.connect(axis0, e[0], 45,
+                  axis1, e[1], -45,
+                  stroke_width='0.34',
+                  stroke_opacity='0.5',
+                  stroke='green',
+                  fill='none')
 
-        
-    for e in g.edges():
-        if (e[0] in a0.nodes) and (e[1] in a1.nodes):
-            h.connect(a0, e[0], sa,
-                      a1, e[1], ta,
-                      random.choice(['red','green','purple','blue','orange']))
+# edges from axis0 to axis2
+for e in g.edges():
+    if (e[0] in axis0.nodes) and (e[1] in axis2.nodes):
+        h.connect(axis0, e[0], -45,
+                  axis2, e[1], 45,
+                  stroke_width='0.34',
+                  stroke_opacity='0.8',
+                  stroke='red',
+                  fill='none')
+
+# edges from axis1 to axis2
+for e in g.edges():
+    if (e[0] in axis1.nodes) and (e[1] in axis2.nodes):
+        h.connect(axis1, e[0], 15,
+                  axis2, e[1], -15,
+                  stroke_width='0.34',
+                  stroke_opacity='0.7',
+                  stroke='blue',
+                  fill='none')
+
     
 
 h.save()

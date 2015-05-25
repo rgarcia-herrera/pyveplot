@@ -16,15 +16,11 @@ class Hiveplot:
         for axis in self.axes:
             self.axes_lines.add(axis.getDwg())
 
-    def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, color):
+    def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, **kwargs):
         n0    = axis0.nodes[n0_index]
         n1    = axis1.nodes[n1_index]
 
-        pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y),  # source
-                             stroke_width='0.34',
-                             stroke_opacity='0.3',
-                             stroke=color,
-                             fill='none')
+        pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y), **kwargs) # source
 
         # compute source control point
         alfa = axis0.angle() + radians(source_angle)
