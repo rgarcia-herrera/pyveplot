@@ -15,6 +15,8 @@ class Hiveplot:
     def draw_axes(self):
         for axis in self.axes:
             self.axes_lines.add(axis.getDwg())
+        self.dwg.add( self.axes_lines )
+
 
     def connect(self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, **kwargs):
         n0    = axis0.nodes[n0_index]
@@ -44,7 +46,6 @@ class Hiveplot:
             
     def save(self):
         self.draw_axes()
-        self.dwg.add( self.axes_lines )
         self.dwg.save()
 
 
@@ -95,12 +96,13 @@ class Node:
         self.y = 0
         self.r = 2
         self.dwg   = svgwrite.Drawing()        
-        
-    def getDwg(self):
         self.dwg.add(self.dwg.circle(center = (self.x, self.y),
                                      r      = self.r,
                                      stroke = 'blue',
                                      stroke_width = 0))
+
+        
+    def getDwg(self):
         return self.dwg
 
 
