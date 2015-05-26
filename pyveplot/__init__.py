@@ -94,13 +94,8 @@ class Node:
         self.ID = ID
         self.x = 0
         self.y = 0
-        self.r = 2
+        self.r = 1.5
         self.dwg   = svgwrite.Drawing()        
-        self.dwg.add(self.dwg.circle(center = (self.x, self.y),
-                                     r      = self.r,
-                                     stroke = 'blue',
-                                     stroke_width = 0))
-
         
     def getDwg(self):
         return self.dwg
