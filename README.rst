@@ -8,4 +8,4 @@ complex networks.
 This library uses `svgwrite <http://svgwrite.readthedocs.org/en/latest/classes/shapes.html>`_ to 
 programbatically create hiveplots.
 
-.. image:: example.png
+.. image:: https://github.com/CSB-IG/pyveplot/raw/master/example.png
