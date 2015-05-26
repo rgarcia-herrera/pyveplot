@@ -5,7 +5,7 @@ A nice way of visualizing complex networks are `Hiveplots <http://www.hiveplot.c
 
 
 This library uses `svgwrite <http://svgwrite.readthedocs.org/en/latest/classes/shapes.html>`_ to 
-programbatically create images like this one:
+programmatically create images like this one:
 
 .. image:: https://github.com/CSB-IG/pyveplot/raw/master/example.png
 
