@@ -1,11 +1,11 @@
 Pyveplot
 ========
 
-A nice way of visualizing complex networks are`Hiveplots <http://www.hiveplot.com/>`_.
+A nice way of visualizing complex networks are `Hiveplots <http://www.hiveplot.com/>`_.
 
 
 This library uses `svgwrite <http://svgwrite.readthedocs.org/en/latest/classes/shapes.html>`_ to 
-programbatically create hiveplots.
+programbatically create images like this one:
 
 .. image:: https://github.com/CSB-IG/pyveplot/raw/master/example.png
 
@@ -54,7 +54,7 @@ Create a plot from a network, randomly selecting whichever axis to place 50 node
     
     h.save()
 
-Yields:  
+
 .. image:: https://github.com/CSB-IG/pyveplot/raw/master/short_example.png
   
 The more elaborate `example.py <https://github.com/CSB-IG/pyveplot/blob/master/example.py>`_ 
