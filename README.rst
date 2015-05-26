@@ -14,8 +14,6 @@ programbatically create hiveplots.
 A short example
 -------
 
-.. image:: https://github.com/CSB-IG/pyveplot/raw/master/short_example.png
-
 Create a plot from a network, randomly selecting whichever axis to place 50 nodes.::
 
   from pyveplot import *
@@ -56,7 +54,9 @@ Create a plot from a network, randomly selecting whichever axis to place 50 node
                     stroke='magenta')
   
   h.save()
+
+.. image:: https://github.com/CSB-IG/pyveplot/raw/master/short_example.png
   
-The more elaborate example.py shows how one can control the shapes of
-nodes, the control points and attributes of edges, and the attributes
+The more elaborate `example.py <https://github.com/CSB-IG/pyveplot/blob/master/example.py>`_ 
+shows how to use shapes for nodes, placement of the control points and attributes of edges, and the attributes
 of axes.
