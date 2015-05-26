@@ -15,6 +15,8 @@ programbatically create hiveplots.
 Example
 -------
 
+Create a plot from a random network, randomly selecting whichever axis to place 100 nodes.::
+
     from pyveplot import *
     import networkx as nx
     import random
