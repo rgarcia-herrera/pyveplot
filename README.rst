@@ -60,3 +60,13 @@ Create a plot from a network, randomly selecting whichever axis to place 50 node
 The more elaborate `example.py <https://github.com/CSB-IG/pyveplot/blob/master/example.py>`_ 
 shows how to use shapes for nodes, placement of the control points and attributes of edges, and the attributes
 of axes.
+
+
+Installation
+------------
+
+Install library, perhaps within a virtualenv::
+
+    $ pip install pyveplot
+
+
