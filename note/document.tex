@@ -30,24 +30,33 @@ https://pypi.python.org/pypi/pyveplot/
 
 \section{Introduction}
 
-Hiveplots are a rational way of visualizing large networks which allow
+Hiveplots are a way of visualizing large networks which allow
 for easy assesment and comparison of their structural properties. \citealp{Boffelli03}
 
 Scalable Vector Graphics (SVG) is a modularized language for
 describing two-dimensional vector graphics, and an open standard
 recomended by the World Wide Web Consortium (W3C).
-\citealp{McCormack:11:SVG} The requirements of a Hiveplot can be met
-with the most basic shapes supported by SVG, and its capabilities can
+\citealp{McCormack:11:SVG} 
+
+
+Although the requirements of a Hiveplot can be met
+with the most basic shapes supported by SVG, its capabilities can
 be exploited much further.
 
+
+
+
 Though tools are available for the creation of Hiveplots they tend to
-be graphical user interfaces or programmatic interfaces for other
-languages.
+be graphical user interfaces which may not be flexible enough, or
+programmatic interfaces which may not be compatible
 
 Python is a mature and popular programming language with a large
 number of libraries related to data analysis in general and life
 sciences and bioinformatics in particular.
 
+This library provides a procedural, imperative approach to the
+assembly of a plot, which may have better readability than a more
+declarative approach.
 
 \section{Object Oriented Approach}
 
@@ -61,37 +70,31 @@ process. A hiveplot consists of
 \end{itemize}
 The API provides the corresponding objects: a Hiveplot object which
 contains an arbitrary number of Axis objects which in turn contain an
-arbitrary number of Node objects. Hiveplot objects provide a Connect
-method which draws edges as bezier curves with control points that are
-set along an invisible axis separated from the source and target axes
-by angles passed as arguments, along with the nodes and axes to
-connect.
+arbitrary number of Node objects, and a method to connect them.
+
+The ``Hiveplot.connect()'' method draws edges as bezier curves. Start and
+end points are set by the ``Axis.add_node()'' method, using the placement
+information of the axis and a specified offset from its start point.
+
+Control points are set at the same distance from the start point of an
+axis as their corresponding nodes, but along an invisible axis that
+shares its origin but diverges by a given angle.
 
 
 \begin{figure}[!tpb]%figure1
-%\centerline{\includegraphics{fig01.eps}}
-\caption{Caption, caption.}\label{fig:01}
+  % \centerline{\includegraphics{fig01.eps}}
+  \caption{Hiveplot of Erdos-Renyi graph trivially generated using
+    NetworkX. Plot displays some SVG goodness: paths that make edges
+    and axes can have any width, color or dash pattern, any valid SVG
+    element can be used as a node. Define as many axes as you need,
+    place them anywhere in the SVG canvas.}\label{fig:01}
 \end{figure}
 
-\begin{figure}[!tpb]%figure2
-%\centerline{\includegraphics{fig02.eps}}
-\caption{Caption, caption.}\label{fig:02}
-\end{figure}
-
-\section{Discussion}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text.
-
-
-
-
-Table~\ref{Tab:01} shows that Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text. Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text. Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text.
-
+The ``Drawing'' structural component of the underlying svgwrite
+library is available through the ``dwg'' property of Hiveplot, Axis
+and Node objects. Any other shape or valid SVG element may be added to
+them. This allows for a very flexible usage of marks, tags, ticks,
+etc., as is shown in Figure \ref{fig:01}
 
 
 
@@ -115,33 +118,6 @@ the above method Text Text.
 \section{Conclusion}
 
 (Table~\ref{Tab:01}) Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-
-
-
-
-\begin{enumerate}
-\item this is item, use enumerate
-\item this is item, use enumerate
-\item this is item, use enumerate
-\end{enumerate}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text.
-
-
-
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text
 
 
 \section*{Acknowledgement}
