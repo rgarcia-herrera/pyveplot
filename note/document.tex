@@ -30,33 +30,26 @@ https://pypi.python.org/pypi/pyveplot/
 
 \section{Introduction}
 
-Hiveplots are a way of visualizing large networks which allow
-for easy assesment and comparison of their structural properties. \citealp{Boffelli03}
+Hiveplots (HPs) are a way of visualizing large networks which allow
+for easy assesment and comparison of their structural properties.
+\citealp{Boffelli03}
 
 Scalable Vector Graphics (SVG) is a modularized language for
-describing two-dimensional vector graphics, and an open standard
-recomended by the World Wide Web Consortium (W3C).
-\citealp{McCormack:11:SVG} 
+describing two-dimensional vector graphics. \citealp{McCormack:11:SVG}
+While the requirements of a Hiveplot can be met with the most basic
+shapes supported by SVG, the design of this library allows the
+programmer to take full advantage of the wide array of capabilities
+provided by this graphics format. 
 
-
-Although the requirements of a Hiveplot can be met
-with the most basic shapes supported by SVG, its capabilities can
-be exploited much further.
-
-
-
-
-Though tools are available for the creation of Hiveplots they tend to
-be graphical user interfaces which may not be flexible enough, or
-programmatic interfaces which may not be compatible
 
 Python is a mature and popular programming language with a large
 number of libraries related to data analysis in general and life
 sciences and bioinformatics in particular.
 
-This library provides a procedural, imperative approach to the
-assembly of a plot, which may have better readability than a more
-declarative approach.
+Tools available for the creation of HPs can be used either through a
+graphical user interface, which may not be flexible enough, or through
+an Application Programming Interface (API) which 
+
 
 \section{Object Oriented Approach}
 
@@ -73,7 +66,7 @@ contains an arbitrary number of Axis objects which in turn contain an
 arbitrary number of Node objects, and a method to connect them.
 
 The ``Hiveplot.connect()'' method draws edges as bezier curves. Start and
-end points are set by the ``Axis.add_node()'' method, using the placement
+end points are set by the ``Axis.addnode()'' method, using the placement
 information of the axis and a specified offset from its start point.
 
 Control points are set at the same distance from the start point of an
@@ -96,44 +89,25 @@ and Node objects. Any other shape or valid SVG element may be added to
 them. This allows for a very flexible usage of marks, tags, ticks,
 etc., as is shown in Figure \ref{fig:01}
 
+This procedural, imperative way of adding the elements of a plot, may
+have better readability than a declarative approach.
 
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     please remove the " % " symbol from \centerline{\includegraphics{fig01.eps}}
-%     as it may ignore the figures.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-\section{Conclusion}
-
-(Table~\ref{Tab:01}) Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
 
 
 \section*{Acknowledgement}
-Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
+The author wishes to acknowledge the Computational and Systems
+Biology/Integrative Genomics lab at INMEGEN.
 
-\paragraph{Funding\textcolon} Text Text Text Text Text Text  Text Text.
 
 %\bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
 %\bibliographystyle{plainnat}
 %\bibliographystyle{abbrv}
-%\bibliographystyle{bioinformatics}
+\bibliographystyle{bioinformatics}
 %
 %\bibliographystyle{plain}
 %
-%\bibliography{Document}
+%\bibliography{references}
 
 
 \begin{thebibliography}{}
