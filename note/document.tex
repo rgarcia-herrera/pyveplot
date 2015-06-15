@@ -76,6 +76,12 @@ Control points are set at the same distance from the start (or end)
 point of an axis as their corresponding nodes, but along an invisible
 axis that shares its origin but diverges by a given angle.
 
+The ``Drawing'' structural component of the underlying svgwrite
+library is available through the ``dwg'' (short for drawing) property
+of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries Node}
+objects. Any other shape or valid SVG element may be added to them.
+This allows for a very flexible use of marks, tags, ticks, etc., as is
+shown in Figure \ref{fig:01}
 
 \begin{figure}[!tpb]%figure1
   % \centerline{\includegraphics{fig01.eps}}
@@ -86,18 +92,11 @@ axis that shares its origin but diverges by a given angle.
     place them anywhere in the SVG canvas.}\label{fig:01}
 \end{figure}
 
-The ``Drawing'' structural component of the underlying svgwrite
-library is available through the ``dwg'' (short for drawing) property
-of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries Node}
-objects. Any other shape or valid SVG element may be added to them.
-This allows for a very flexible use of marks, tags, ticks, etc., as is
-shown in Figure \ref{fig:01}
-
-
+More examples in repository: https://github.com/CSB-IG/pyveplot/
 
 
 \section*{Acknowledgement}
-The author wishes to acknowledge the Computational and Systems
+The author wishes to acknowledge the colaboration of the Computational and Systems
 Biology/Integrative Genomics lab at INMEGEN.
 
 
