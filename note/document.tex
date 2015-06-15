@@ -6,7 +6,7 @@
 \firstpage{1}
 
 \title[short Title]{Pyveplot: SVG Hiveplot API}
-\author[Sample \textit{et~al}]{Rodrigo Garc'ia-Herrera\,$^{1,*}$ \footnote{to whom correspondence should be addressed}}
+\author[Sample \textit{et~al}]{Rodrigo Garcia-Herrera\,$^{1,*}$ \footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of Bioinformatics, Mexican Institute of
   Genomic Medicine}
 
@@ -32,62 +32,64 @@ https://pypi.python.org/pypi/pyveplot/
 
 Hiveplots (HPs) are a way of visualizing large networks which allow
 for easy assesment and comparison of their structural properties.
-\citealp{Boffelli03}
+\cite{krzywinski2012hive}
 
-Scalable Vector Graphics (SVG) is a modularized language for
-describing two-dimensional vector graphics. \citealp{McCormack:11:SVG}
-While the requirements of a Hiveplot can be met with the most basic
-shapes supported by SVG, the design of this library allows the
-programmer to take full advantage of the wide array of capabilities
-provided by this graphics format. 
+Although graphical user interfaces for the creation of HPs may be
+easier to use or learn, an Application Programming Interface
+(API) provides for more flexibility and automation which are boosted
+by the use of a powerful programming language. Python is such a
+language: mature and popular, it has a large number of libraries
+related to data analysis in general and life sciences and
+bioinformatics in particular. For example, it is easy to leverage the
+functionality provided by the powerful NetworkX library, while having
+no dependencies to it.
 
-
-Python is a mature and popular programming language with a large
-number of libraries related to data analysis in general and life
-sciences and bioinformatics in particular.
-
-Tools available for the creation of HPs can be used either through a
-graphical user interface, which may not be flexible enough, or through
-an Application Programming Interface (API) which 
+Scalable Vector Graphics (SVG) is a modularized format for describing
+two-dimensional vector graphics. It is based on XML and developed by
+the World Wide Web Consortium. \cite{McCormack:11:SVG} While the
+requirements of a HP can be met with the most basic shapes supported
+by SVG, the design of Pyveplot allows a programmer to take full
+advantage of the wide array of capabilities of the graphics format.
 
 
 \section{Object Oriented Approach}
 
-The Object Oriented (OO) approach to the Aplication Programming
-Interface (API) makes the creation of a plot a straightforward
-process. A hiveplot consists of 
+The Object Oriented (OO) approach to the API makes the creation of a
+plot a straightforward process. A HP consists of
 \begin{itemize}
 \item radialy distributed linear axes
 \item nodes along those axes
 \item conections among those nodes
 \end{itemize}
-The API provides the corresponding objects: a Hiveplot object which
-contains an arbitrary number of Axis objects which in turn contain an
-arbitrary number of Node objects, and a method to connect them.
+The API provides the corresponding objects: a {\bfseries Hiveplot} object
+which contains an arbitrary number of {\bfseries Axis} objects which in
+turn contain an arbitrary number of {\bfseries Node} objects, and a method
+to connect them.
 
 The ``Hiveplot.connect()'' method draws edges as bezier curves. Start and
-end points are set by the ``Axis.addnode()'' method, using the placement
+end points are set by the ``Axis.add\_node()'' method, using the placement
 information of the axis and a specified offset from its start point.
 
-Control points are set at the same distance from the start point of an
-axis as their corresponding nodes, but along an invisible axis that
-shares its origin but diverges by a given angle.
+Control points are set at the same distance from the start (or end)
+point of an axis as their corresponding nodes, but along an invisible
+axis that shares its origin but diverges by a given angle.
 
 
 \begin{figure}[!tpb]%figure1
   % \centerline{\includegraphics{fig01.eps}}
   \caption{Hiveplot of Erdos-Renyi graph trivially generated using
-    NetworkX. Plot displays some SVG goodness: paths that make edges
+    NetworkX. Showing off some SVG goodness: paths that make edges
     and axes can have any width, color or dash pattern, any valid SVG
     element can be used as a node. Define as many axes as you need,
     place them anywhere in the SVG canvas.}\label{fig:01}
 \end{figure}
 
 The ``Drawing'' structural component of the underlying svgwrite
-library is available through the ``dwg'' property of Hiveplot, Axis
-and Node objects. Any other shape or valid SVG element may be added to
-them. This allows for a very flexible usage of marks, tags, ticks,
-etc., as is shown in Figure \ref{fig:01}
+library is available through the ``dwg'' (short for drawing) property
+of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries Node}
+objects. Any other shape or valid SVG element may be added to them.
+This allows for a very flexible use of marks, tags, ticks, etc., as is
+shown in Figure \ref{fig:01}
 
 This procedural, imperative way of adding the elements of a plot, may
 have better readability than a declarative approach.
@@ -103,42 +105,50 @@ Biology/Integrative Genomics lab at INMEGEN.
 %\bibliographystyle{achemnat}
 %\bibliographystyle{plainnat}
 %\bibliographystyle{abbrv}
+
+\begin{thebibliography}{}
 \bibliographystyle{bioinformatics}
+\bibliography{references.bib}
+\end{thebibliography}
+
 %
 %\bibliographystyle{plain}
 %
-%\bibliography{references}
+%
 
 
-\begin{thebibliography}{}
-\bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
+% 
+% \bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
 
-\bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
+% \bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
 
-\bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
-Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
-in nigral dopaminergic neurnol cell: correlation with the known
-pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
-Res.}, \textbf{110}(Suppl. 1), 76--84.
+% \bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
+% Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
+% in nigral dopaminergic neurnol cell: correlation with the known
+% pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
+% Res.}, \textbf{110}(Suppl. 1), 76--84.
 
-\bibitem[Lehmann, 1986]{Leh86}
-Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
+% \bibitem[Lehmann, 1986]{Leh86}
+% Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
 
-\bibitem[Crenshaw and Jones, 2003]{Cre03}
-Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
-cancer management: one tumor, one chip. \textit{Bioinformatics},
-doi:10.1093/bioinformatics/btn000.
+% \bibitem[Crenshaw and Jones, 2003]{Cre03}
+% Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
+% cancer management: one tumor, one chip. \textit{Bioinformatics},
+% doi:10.1093/bioinformatics/btn000.
 
-\bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
-Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
-(ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
-???--???.
+% \bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
+% Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
+% (ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
+% ???--???.
 
-\bibitem[Bardet, 1920]{Bar20}
-Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
-polydactylie et retinite pigmentaire (contribution a l'etude des
-formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
-institution, Paris, France.
+% \bibitem[Bardet, 1920]{Bar20}
+% Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
+% polydactylie et retinite pigmentaire (contribution a l'etude des
+% formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
+% institution, Paris, France.
 
-\end{thebibliography}
+% 
+
+
+
 \end{document}
