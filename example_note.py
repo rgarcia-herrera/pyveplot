@@ -52,10 +52,10 @@ y1 = y0 + (l * sin (theta))
 axis3 = Axis( (x0,y0), (x1,y1), stroke="forestgreen", stroke_dasharray="10 5 5", stroke_width=4)
 
 
-l = 1593
+l = 1512
 x0 = 1000
 y0 = 1600 
-theta += delta_theta
+theta = (3 * pi) / 2
 x1 = x0 + (l * cos (theta))
 y1 = y0 + (l * sin (theta))
 axis4 = Axis( (x0,y0), (x1,y1), stroke="midnightblue", stroke_dasharray="10 5 20 5", stroke_width=4)
@@ -113,7 +113,7 @@ for n,d in sorted_dg:
     if d >= bins[2] and d < bins[3]:
         offset2 += delta2
         axis2.add_node(nd, offset2)
-        degree = float(nx.degree(g, n)) / 5.0
+        degree = float(nx.degree(g, n)) / 3.0
         nd.dwg = nd.dwg.rect(insert = (nd.x - (degree/2.0), nd.y - (degree/2.0)),
                              size   = (degree, degree),
                              fill   = rgb(a2_color.r*100, a2_color.g*100, a2_color.b*100, mode="%"),
@@ -124,12 +124,21 @@ for n,d in sorted_dg:
     if d >= bins[3] and d < bins[4]:
         offset1 += delta1
         axis1.add_node(nd, offset1)
-        degree = float(nx.degree(g, n)) / 5.0
-        nd.dwg = nd.dwg.rect(insert = (nd.x - (degree/2.0), nd.y - (degree/2.0)),
-                             size   = (degree, degree),
-                             fill   = rgb(a3_color.r*100, a3_color.g*100, a3_color.b*100, mode="%"),
-                             stroke = rgb(33,66,99),
-                             stroke_width = 0.01)
+
+        if random.choice([True, False]):
+            nd.dwg = nd.dwg.circle(center = (nd.x, nd.y),
+                                   r      = float(nx.degree(g, n)) / 4.3,
+                                   fill   = rgb(a3_color.r*100, a3_color.g*100, a3_color.b*100, mode="%"),
+                                   stroke = 'red',
+                                   stroke_width = 1.6)
+        else:
+            degree = float(nx.degree(g, n)) / 3.0
+            nd.dwg = nd.dwg.rect(insert = (nd.x - (degree/2.0), nd.y - (degree/2.0)),
+                                 size   = (degree, degree),
+                                 fill   = rgb(a3_color.r*100, a3_color.g*100, a3_color.b*100, mode="%"),
+                                 stroke = rgb(33,66,99),
+                                 stroke_width = 0.01)
+
         a3_color = a3_color.lighter(amt=0.08)
 
 
@@ -139,11 +148,11 @@ for n,d in sorted_dg:
         axis0.add_node(nd, offset0)
         if random.choice([True, False]):
             nd.dwg = nd.dwg.circle(center = (nd.x, nd.y),
-                                   r      = float(nx.degree(g, n)) / 10.0,
+                                   r      = float(nx.degree(g, n)) / 5.0,
                                    fill   = rgb(a0_color.r*100, a0_color.g*100, a0_color.b*100, mode="%"),
                                    stroke_width = 0)
         else:
-            degree = float(nx.degree(g, n)) / 5.0
+            degree = float(nx.degree(g, n)) / 3.0
             nd.dwg = nd.dwg.rect(insert = (nd.x - (degree/2.0), nd.y - (degree/2.0)),
                                  size   = (degree, degree),
                                  fill   = rgb(a0_color.r*100, a0_color.g*100, a0_color.b*100, mode="%"),
@@ -194,8 +203,8 @@ for e in g.edges():
 # edges from axis3 to axis4
 for e in g.edges():
     if (e[0] in axis3.nodes) and (e[1] in axis4.nodes):
-        h.connect(axis3, e[0], 45,
-                  axis4, e[1], -45,
+        h.connect(axis3, e[0], 35,
+                  axis4, e[1], -35,
                   stroke_width='0.34',
                   stroke_opacity='0.8',
                   stroke=random.choice(['seagreen','slateblue','lawngreen']),
