@@ -6,7 +6,7 @@ def readme():
 
     
 setup(name='pyveplot',
-      version='0.5',
+      version='0.6',
       description='SVG Hiveplot Python API',
       long_description=readme(),
       classifiers=[
