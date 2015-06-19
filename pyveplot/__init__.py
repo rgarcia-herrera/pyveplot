@@ -20,7 +20,7 @@ class Hiveplot:
         n0    = axis0.nodes[n0_index]
         n1    = axis1.nodes[n1_index]
 
-        pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y), **kwargs) # source
+        pth  = self.dwg.path(d="M %s %s" % (n0.x, n0.y), fill='none', **kwargs) # source
 
         # compute source control point
         alfa = axis0.angle() + radians(source_angle)
