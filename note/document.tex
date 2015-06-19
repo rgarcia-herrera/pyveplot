@@ -6,7 +6,7 @@
 \firstpage{1}
 
 \title[short Title]{Pyveplot: SVG Hive Plot API}
-\author[]{Rodrigo Garcia-Herrera}
+\author[]{Rodrigo Garc\'ia-Herrera}
 \address{Department of Bioinformatics, National Institute of Genomic
   Medicine, Periferico Sur 4809, Mexico City 14610}
 
@@ -32,7 +32,7 @@ https://pypi.python.org/pypi/pyveplot/
 
 Hive plots (HPs) are a way of visualizing large networks which allow
 for easy assesment and comparison of their structural properties.
-\cite{krzywinski2012hive}
+[\cite{krzywinski2012hive}]
 
 Although graphical user interfaces for the creation of HPs may be
 easier to use or learn, an Application Programming Interface (API)
@@ -42,12 +42,12 @@ mature and popular, it has a large number of libraries related to data
 analysis in general and life sciences and bioinformatics in
 particular. For example, it is easy to leverage the functionality
 provided by the powerful NetworkX
-library \cite{hagberg-2008-exploring}, while having no dependencies on
+library [\cite{hagberg-2008-exploring}], while having no dependencies on
 it.
 
 Scalable Vector Graphics (SVG) is a modularized format for describing
 two-dimensional vector graphics. It is based on XML and developed by
-the World Wide Web Consortium \cite{McCormack:11:SVG}. While the
+the World Wide Web Consortium [\cite{McCormack:11:SVG}]. While the
 requirements of a HP can be met with the most basic shapes supported
 by SVG, the design of Pyveplot allows a programmer to take full
 advantage of the wide array of capabilities of the graphics format.
@@ -72,27 +72,18 @@ which contains an arbitrary number of {\bfseries Axis} objects which in
 turn contain an arbitrary number of {\bfseries Node} objects, and a method
 to connect them.
 
-The ``Hiveplot.connect()'' method draws edges as bezier curves. Start
-and end points are set when adding nodes to an axis with the
-``Axis.add\_node()'' method, using the placement information of the
+The \verb"Hiveplot.connect()" method draws edges as B\'ezier curves.
+Start and end points map to the coordinates of the given nodes which
+in turn are set when adding nodes to an axis with the
+\verb"Axis.add_node()" method, using the placement information of the
 axis and a specified offset from its start point.
 
 Control points are set at the same distance from the start (or end)
 point of an axis as their corresponding nodes, but along an invisible
 axis that shares its origin but diverges by a given angle.
 
-The ``Drawing'' structural component of the underlying svgwrite
-library (cite?) is available through the ``dwg'' (short for drawing)
-property of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries
-  Node} objects. Any other shape or valid SVG element may be added to
-them. This allows for a very flexible use of marks, tags, ticks, etc.,
-as is shown in Figure \ref{fig:01}
-
-More examples in repository: https://github.com/CSB-IG/pyveplot/
-
-
-\begin{figure}
-  \centerline{\includegraphics{example.png}}
+\begin{figure}[h!]
+  \centerline{\includegraphics[scale=0.7]{example.png}}
   \caption{Hive plot of Erdos-Renyi graph trivially generated using
     NetworkX. Showing off some SVG goodness: paths that make edges
     and axes can have any width, color or dash pattern, any valid SVG
@@ -101,35 +92,23 @@ More examples in repository: https://github.com/CSB-IG/pyveplot/
   \label{fig:01}
 \end{figure}
 
+The \verb"Drawing" structural component of the underlying svgwrite
+library [\cite{svgwrite}] is available through the ``dwg'' (drawing)
+property of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries
+  Node} objects. Any other shape or valid SVG element may be added to
+them. This allows for a very flexible use of marks, tags, ticks, etc.,
+as is shown in Figure \ref{fig:01}.
+
+More examples in repository: https://github.com/CSB-IG/pyveplot/
+
+
+
 \section*{Acknowledgement}
 The author wishes to acknowledge the colaboration of the Computational and Systems
-Biology/Integrative Genomics lab at INMEGEN.
+Biology/Integrative Genomics lab at the National Institute of Genomic
+Medicine, Mexico.
 
-
-\begin{thebibliography}{3}
-
-\bibitem{krzywinski2012hive}
-Martin Krzywinski, Inanc Birol, Steven~JM Jones, and Marco~A Marra.
-\newblock Hive plots—rational approach to visualizing networks.
-\newblock {\em Briefings in bioinformatics}, 13(5):627--644, 2012.
-
-
-\bibitem{hagberg-2008-exploring}
-Aric~A. Hagberg, Daniel~A. Schult, and Pieter~J. Swart.
-\newblock Exploring network structure, dynamics, and function using {NetworkX}.
-\newblock In {\em Proceedings of the 7th Python in Science Conference
-  (SciPy2008)}, pages 11--15, Pasadena, CA USA, August 2008.
-
-
-\bibitem{McCormack:11:SVG}
-Cameron McCormack, Jonathan Watt, Doug Schepers, Anthony Grasso, Patrick
-  Dengler, Jon Ferraiolo, Erik Dahlstr{\"{o}}m, Dean Jackson, Jun Fujisawa, and
-  Chris Lilley.
-\newblock Scalable vector graphics ({SVG}) {1.1} (second edition).
-\newblock {W3C} recommendation, W3C, August 2011.
-\newblock http://www.w3.org/TR/2011/REC-SVG11-20110816/.
-
-\end{thebibliography}
-
+\bibliographystyle{natbib}
+\bibliography{references}
 
 \end{document}
