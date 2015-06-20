@@ -1,4 +1,5 @@
 \documentclass{bioinfo}
+\usepackage{url}
 \copyrightyear{2015}
 \pubyear{2015}
 
@@ -34,6 +35,24 @@ Hive plots (HPs) are a way of visualizing large networks which allow
 for easy assesment and comparison of their structural properties.
 [\cite{krzywinski2012hive}]
 
+% For example, one of the key strengths of a HP is that the placement of
+% nodes along axes can obey whatever criteria makes the data clear.
+% Place along an axis might represent connectedness degree, centrality, age, distance, 
+
+% By decoupling mechanism from policy
+
+% Making full use of the visual 
+% capabilities of visual display of information
+% In order to reveal patterns in the data.
+
+% The full use of HPs capabilities requires a way of expressing the
+% shapes and drawings. 
+
+% that matches in descriptive power the complexity of
+% the graph.
+
+% GUIs require exchange formats and such .dot, .sif. 
+
 Although graphical user interfaces for the creation of HPs may be
 easier to use or learn, an Application Programming Interface (API)
 provides for more flexibility and automation which are boosted by the
@@ -41,9 +60,10 @@ use of a powerful programming language. Python is such a language:
 mature and popular, it has a large number of libraries related to data
 analysis in general and life sciences and bioinformatics in
 particular. For example, it is easy to leverage the functionality
-provided by the powerful NetworkX
-library [\cite{hagberg-2008-exploring}], while having no dependencies on
-it.
+provided by the powerful NetworkX library
+[\cite{hagberg-2008-exploring}], while having no dependencies on it.
+In fact, Pyveplot's only dependency is the svgwrite library, which is
+also pure Python.
 
 Scalable Vector Graphics (SVG) is a modularized format for describing
 two-dimensional vector graphics. It is based on XML and developed by
@@ -72,6 +92,17 @@ which contains an arbitrary number of {\bfseries Axis} objects which in
 turn contain an arbitrary number of {\bfseries Node} objects, and a method
 to connect them.
 
+\begin{figure}[th!]
+  \centerline{\includegraphics[scale=0.8]{example.pdf}}
+  \caption{Hive plot of Erd\"os-R\'enyi graph trivially generated
+    using NetworkX. Showing off some SVG goodness: edges and axes are
+    path elements that can have any width, color or dash pattern;
+    whatever valid SVG element can be used as a node. Any number of
+    axes may be defined and placed in the SVG canvas.}
+  \label{fig:01}
+\end{figure}
+
+
 The \verb"Hiveplot.connect()" method draws edges as B\'ezier curves.
 Start and end points map to the coordinates of the given nodes which
 in turn are set when adding nodes to an axis with the
@@ -81,16 +112,6 @@ axis and a specified offset from its start point.
 Control points are set at the same distance from the start (or end)
 point of an axis as their corresponding nodes, but along an invisible
 axis that shares its origin but diverges by a given angle.
-
-\begin{figure}[h!]
-  \centerline{\includegraphics[scale=0.8]{example.pdf}}
-  \caption{Hive plot of Erd\"os-R\'enyi graph trivially generated using
-    NetworkX. Showing off some SVG goodness: paths that make edges
-    and axes can have any width, color or dash pattern, any valid SVG
-    element can be used as a node. Define as many axes as you need,
-    place them anywhere in the SVG canvas.}
-  \label{fig:01}
-\end{figure}
 
 The \verb"Drawing" structural component of the underlying svgwrite
 library [\cite{svgwrite}] is available through the ``dwg'' (drawing)
