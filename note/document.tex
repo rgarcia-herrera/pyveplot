@@ -32,51 +32,47 @@ https://pypi.python.org/pypi/pyveplot/
 \section{Introduction}
 
 Hive plots (HPs) are a way of visualizing large networks which allow
-for easy assesment and comparison of their structural properties.
+for easy assesment and comparison of their properties.
 [\cite{krzywinski2012hive}]
 
-% For example, one of the key strengths of a HP is that the placement of
-% nodes along axes can obey whatever criteria makes the data clear.
-% Place along an axis might represent connectedness degree, centrality, age, distance, 
-
-% By decoupling mechanism from policy
-
-% Making full use of the visual 
-% capabilities of visual display of information
-% In order to reveal patterns in the data.
-
-% The full use of HPs capabilities requires a way of expressing the
-% shapes and drawings. 
-
-% that matches in descriptive power the complexity of
-% the graph.
-
-% GUIs require exchange formats and such .dot, .sif. 
+There are a few tools for their creation, some are libraries for
+different programming languages, some are GUIs which cover many common
+use cases, such as visualizing aspects of network structure (e.g. k
+degree, centrality, etc) [\cite{jhive}].
 
 Although graphical user interfaces for the creation of HPs may be
-easier to use or learn, an Application Programming Interface (API)
-provides for more flexibility and automation which are boosted by the
-use of a powerful programming language. Python is such a language:
-mature and popular, it has a large number of libraries related to data
-analysis in general and life sciences and bioinformatics in
-particular. For example, it is easy to leverage the functionality
-provided by the powerful NetworkX library
-[\cite{hagberg-2008-exploring}], while having no dependencies on it.
-In fact, Pyveplot's only dependency is the svgwrite library, which is
-also pure Python.
+easier to use or learn, an Application Programming Interface (API) may
+be better able to match in descriptive power the ecomplexity of a
+given plot. Also the use of an API may ease the automation required
+for batch creation of plots, for example when the need arises for
+side-by-side comparison of networks.
+
+Flexibility and automation are boosted by the use of a powerful
+programming language. Python is such a language: mature and popular,
+it has a large number of libraries related to data analysis in general
+and life sciences and bioinformatics in particular. For example, it is
+easy to leverage the functionality provided by the powerful NetworkX
+library [\cite{hagberg-2008-exploring}], while having no dependencies
+on it. In fact, Pyveplot's only dependency is the svgwrite library
+[\cite{svgwrite}].
 
 Scalable Vector Graphics (SVG) is a modularized format for describing
 two-dimensional vector graphics. It is based on XML and developed by
-the World Wide Web Consortium [\cite{McCormack:11:SVG}]. While the
-requirements of a HP can be met with the most basic shapes supported
-by SVG, the design of Pyveplot allows a programmer to take full
-advantage of the wide array of capabilities of the graphics format.
+the World Wide Web Consortium [\cite{McCormack:11:SVG}] which means it
+can be promptly read by many standards compliant software ranging from
+editors to specialized ECMAScript based language extensions for
+interactive visualization, like D3.js [\cite{bostock2011d3}]. While
+the requirements of a HP can be met with the most basic shapes
+supported by SVG, the design of Pyveplot allows a programmer to take
+full advantage of the wide array of capabilities of the graphics
+format.
 
 The design of the Pyveplot API favors a procedural, imperative way of
 creating and linking the elements of a plot, at various degrees of
 abstraction. For complex data this approach may have better
 readability than e.g. declarative approaches, which obscure mecanisms in
-favor of description of the wanted result.
+favor of description of the wanted result, such as are found on other
+libraries like HiveR [\cite{hiveR}].
 
 \section{Object Oriented Approach}
 
@@ -95,10 +91,10 @@ to connect them.
 \begin{figure}[th!]
   \centerline{\includegraphics[scale=0.8]{example.pdf}}
   \caption{Hive plot of Erd\"os-R\'enyi graph trivially generated
-    using NetworkX. Showing off some SVG goodness: edges and axes are
-    path elements that can have any width, color or dash pattern;
-    whatever valid SVG element can be used as a node. Any number of
-    axes may be defined and placed in the SVG canvas.}
+    using Python's NetworkX. Showing off some SVG goodness: edges and
+    axes are path elements that can have any width, color or dash
+    pattern; whatever valid SVG element can be used as a node. Any
+    number of axes may be defined and placed in the SVG canvas.}
   \label{fig:01}
 \end{figure}
 
@@ -114,7 +110,7 @@ point of an axis as their corresponding nodes, but along an invisible
 axis that shares its origin but diverges by a given angle.
 
 The \verb"Drawing" structural component of the underlying svgwrite
-library [\cite{svgwrite}] is available through the ``dwg'' (drawing)
+library is available through the ``dwg'' (drawing)
 property of {\bfseries Hiveplot}, {\bfseries Axis} and {\bfseries
   Node} objects. Any other shape or valid SVG element may be added to
 them. This allows for a very flexible use of marks, tags, ticks, etc.,
