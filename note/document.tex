@@ -9,7 +9,7 @@
 \title[short Title]{Pyveplot: SVG Hive Plot API}
 \author[]{Rodrigo Garc\'ia-Herrera}
 \address{Department of Bioinformatics, National Institute of Genomic
-  Medicine, Periferico Sur 4809, Mexico City 14610}
+  Medicine, Mexico}
 
 \history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
 
@@ -31,7 +31,7 @@ https://pypi.python.org/pypi/pyveplot/
 
 \section{Introduction}
 
-Hive plots (HPs) are a way of visualizing large networks which allow
+Hive plots are a way of visualizing large networks which allow
 for easy assessment and comparison of their properties.
 [\cite{krzywinski2012hive}]
 
@@ -43,7 +43,7 @@ plotting directed networks, source-hub-sink categories for nodes,
 mapping network structure parameters like degree or centrality to node
 size or placement, \&c.
 
-Although GUIs for the creation of HPs may be easier to use or learn,
+Although GUIs for the creation of Hive plots may be easier to use or learn,
 an Application Programming Interface (API) may be better able to match
 in descriptive power the ecomplexity of a given plot. This may be
 necesary when one wishes to give visual representation of other
@@ -56,22 +56,24 @@ comparison of networks, a key strength of Hive plots.
 Flexibility and automation are boosted by the use of a powerful
 programming language such as Python. It is mature and popular, it has
 a large number of libraries related to data analysis in general and
-life sciences and bioinformatics in particular. Being a Python API,
-Pyveplot can readily leverage e.g. the complex network analysis
+life sciences and bioinformatics in particular. Pyveplot is a Python
+library that exposes an object oriented API for the creation of Hive
+plots. Thus it can readily leverage e.g. the complex network analysis
 functionality provided by the powerful NetworkX library
 [\cite{hagberg-2008-exploring}], while having no dependencies on it.
 
-In fact, Pyveplot's only dependency is the publicly available ``svgwrite''
-library [\cite{svgwrite}]. Scalable Vector Graphics (SVG) is a
-modularized format for describing two-dimensional vector graphics. It
-is based on XML and developed by the World Wide Web Consortium
-[\cite{McCormack:11:SVG}] which means it can be promptly read by many
-standards compliant software ranging from editors to specialized
-ECMAScript-based language extensions for interactive visualization,
-like D3.js [\cite{bostock2011d3}]. While the requirements of a HP can
-be met with the most basic shapes supported by SVG, the design of
-Pyveplot allows a programmer to take full advantage of the wide array
-of capabilities of the graphics format.
+In fact, Pyveplot's only dependency is the publicly available
+``svgwrite'' library [\cite{svgwrite}]. Scalable Vector Graphics (SVG)
+is a modularized format for describing two-dimensional vector
+graphics. It is based on XML and developed by the World Wide Web
+Consortium [\cite{McCormack:11:SVG}] which means it can be promptly
+read by many standards compliant software ranging from editors to
+specialized ECMAScript-based language extensions for interactive
+visualization, like D3.js [\cite{bostock2011d3}]. While the
+requirements of a Hive plot can be met with the most basic shapes
+supported by SVG, the design of Pyveplot allows a programmer to take
+full advantage of the wide array of capabilities of the graphics
+format.
 
 \begin{figure}[th!]
   \centerline{\includegraphics[scale=0.8]{example.pdf}}
@@ -95,7 +97,7 @@ libraries like HiveR [\cite{hiveR}].
 
 
 The object oriented API makes the creation of a plot a straightforward
-process. A HP consists of:
+process. A Hive plot consists of:
 \begin{itemize}
 \item radialy distributed linear axes
 \item nodes along those axes
