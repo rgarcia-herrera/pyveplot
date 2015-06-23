@@ -36,42 +36,47 @@ for easy assesment and comparison of their properties.
 [\cite{krzywinski2012hive}]
 
 There are a few tools for their creation, some are libraries for
-different programming languages, some are GUIs which cover many common
-use cases, such as visualizing aspects of network structure (e.g. k
-degree, centrality, etc) [\cite{jhive}].
+different programming languages, others are Graphical User Interfaces
+(GUIs) like jhive [\cite{jhive}] or HiveGraph [\cite{hivegraph}]. The
+former cover many common use cases such as plotting directed networks;
+source-hub-sink categories for nodes; mapping network structure
+parameters like degree or centrality to node size or placement,
+\&c.).
 
 Although graphical user interfaces for the creation of HPs may be
 easier to use or learn, an Application Programming Interface (API) may
 be better able to match in descriptive power the ecomplexity of a
-given plot. Also the use of an API may ease the automation required
-for batch creation of plots, for example when the need arises for
-side-by-side comparison of networks.
+given plot.
+
+The use of an API may also enable the automation required for batch
+creation of plots, for example when the need arises for side-by-side
+comparison of networks, a key strength of Hive plots.
 
 Flexibility and automation are boosted by the use of a powerful
-programming language. Python is such a language: mature and popular,
-it has a large number of libraries related to data analysis in general
-and life sciences and bioinformatics in particular. For example, it is
-easy to leverage the functionality provided by the powerful NetworkX
-library [\cite{hagberg-2008-exploring}], while having no dependencies
-on it. In fact, Pyveplot's only dependency is the svgwrite library
-[\cite{svgwrite}].
+programming language such as Python. It is mature and popular, it has
+a large number of libraries related to data analysis in general and
+life sciences and bioinformatics in particular. Being a Python API,
+Pyveplot can readily leverage e.g. the complex network analysis
+functionality provided by the powerful NetworkX library
+[\cite{hagberg-2008-exploring}], while having no dependencies on it.
 
-Scalable Vector Graphics (SVG) is a modularized format for describing
-two-dimensional vector graphics. It is based on XML and developed by
-the World Wide Web Consortium [\cite{McCormack:11:SVG}] which means it
-can be promptly read by many standards compliant software ranging from
-editors to specialized ECMAScript based language extensions for
-interactive visualization, like D3.js [\cite{bostock2011d3}]. While
-the requirements of a HP can be met with the most basic shapes
-supported by SVG, the design of Pyveplot allows a programmer to take
-full advantage of the wide array of capabilities of the graphics
-format.
+In fact, Pyveplot's only dependency is the svgwrite library
+[\cite{svgwrite}]. Scalable Vector Graphics (SVG) is a modularized
+format for describing two-dimensional vector graphics. It is based on
+XML and developed by the World Wide Web Consortium
+[\cite{McCormack:11:SVG}] which means it can be promptly read by many
+standards compliant software ranging from editors to specialized
+ECMAScript-based language extensions for interactive visualization,
+like D3.js [\cite{bostock2011d3}]. While the requirements of a HP can
+be met with the most basic shapes supported by SVG, the design of
+Pyveplot allows a programmer to take full advantage of the wide array
+of capabilities of the graphics format.
 
 The design of the Pyveplot API favors a procedural, imperative way of
 creating and linking the elements of a plot, at various degrees of
-abstraction. For complex data this approach may have better
-readability than e.g. declarative approaches, which obscure mecanisms in
-favor of description of the wanted result, such as are found on other
+abstraction. For rich datasets this approach may have better
+readability than declarative approaches, which obscure mecanisms in
+favor of description of the wanted result, such as are found in
 libraries like HiveR [\cite{hiveR}].
 
 \section{Object Oriented Approach}
