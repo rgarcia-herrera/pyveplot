@@ -1,6 +1,11 @@
 import os
 import random
+import shutil
+import sys
+from datetime import datetime
+from collections import Counter
 
+import pytest
 import networkx
 
 from pyveplot import Hiveplot, Axis, Node
@@ -14,7 +19,12 @@ def assert_same_contents(fpath1, fpath2):
         assert f1.read() == f2.read()
 
 
-def test_short_example(tmpdir):
+def assert_same_lines(fpath1, fpath2):
+    with open(fpath1) as f1, open(fpath2) as f2:
+        assert Counter(f1.readlines()) == Counter(f2.readlines())
+
+
+def test_short_example(tmpdir, request):
     fname = "short_example.svg"
     ref_fpath = os.path.join(TEST_DIR, fname)
     test_fpath = str(tmpdir.join(fname))
@@ -58,4 +68,19 @@ def test_short_example(tmpdir):
 
     h.save(pretty=True)
 
-    assert_same_contents(ref_fpath, test_fpath)
+    try:
+        if sys.version_info >= (3, 6):
+            assert_same_contents(ref_fpath, test_fpath)
+        # elif (3, 0) < sys.version_info < (3, 6):
+        else:
+            # cannot check for exact identity in CPython < 3.6 due to
+            # non-deterministic dict ordering
+            assert_same_lines(ref_fpath, test_fpath)
+    except AssertionError:
+        if request.config.getoption("--dump"):
+            ver = '.'.join(str(i) for i in sys.version_info)
+            dt = datetime.now().isoformat().replace(':', '-')
+            shutil.copyfile(test_fpath, os.path.join(TEST_DIR, '_'.join([ver, dt, fname])))
+        if sys.version_info < (3, 0):
+            pytest.xfail("Python 2 paths are visibly identical, but numerically different")
+        raise
