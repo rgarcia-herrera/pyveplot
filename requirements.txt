@@ -1,0 +1,4 @@
+svgwrite
+numpy
+networkx
+pytest
