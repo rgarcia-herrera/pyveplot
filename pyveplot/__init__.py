@@ -61,7 +61,7 @@ class Hiveplot:
 
     """
 
-    def __init__( self, filename, **kwargs):
+    def __init__(self, filename, **kwargs):
         kwargs = {"debug": True, **kwargs}
         self.dwg = svgwrite.Drawing(filename=filename, **kwargs)
         self.axes = []
