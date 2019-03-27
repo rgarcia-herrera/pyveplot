@@ -2,3 +2,4 @@ svgwrite
 numpy
 networkx
 pytest
+tox
