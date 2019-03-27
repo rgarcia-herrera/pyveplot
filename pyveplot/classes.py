@@ -1,9 +1,119 @@
 # -*- coding: utf-8 -*-
+import warnings
+
 import svgwrite
 from math import sin, cos, atan2, radians, sqrt
 
+from pyveplot.utils import UnitConverter, PolarPlotter
+
+
+UNITS = UnitConverter()
+
+
+class Node(object):
+    """Base class for Node objects.
+
+    Holds coordinates for node placement and a svgwrite.Drawing()
+    object in the *dwg* attribute.
+
+    """
+
+    def __init__(self, ID):
+        """
+        Parameters
+        ----------
+        ID: a unique key for the nodes dict of an axis.
+        """
+        self.ID = ID
+        self.x = 0
+        self.y = 0
+        # self.r = 1.5
+        self.dwg = svgwrite.Drawing()
+
+    def get_dwg(self):
+        return self.dwg
+
+    def getDwg(self):
+        warnings.warn(
+            "getDwg is deprecated in favour of the PEP8-compliant get_dwg",
+            DeprecationWarning,
+        )
+        return self.get_dwg()
+
+
+class Axis(object):
+    node_cls = Node
+
+    def __init__(self, start=(0, 0), end=(0, 0), **kwargs):
+        """Initialize Axis object with start, end positions and optional SVG attributes
+
+        Parameters
+        ----------
+        start  : ( x, y ) start point of the axis
+        end    : (x1, y1) end point of the axis
+        kwargs : extra SVG attributes for line element, optional
+                 Set or change attributes using key=value
+
+        Example
+        -------
+        >>> axis0 = Axis( (150, 200), # start
+                          (150, 0),   # end
+                          stroke="black", stroke_width=1.5) # pass SVG attributes of axes
+
+        """
+        self.start = tuple(UNITS.to_px(i) for i in start)
+        self.end = tuple(UNITS.to_px(i) for i in end)
+        self.nodes = {}
+        self.dwg = svgwrite.Drawing()
+        self.attrs = kwargs
+
+    def add_node(self, node, offset):
+        """Add a Node object to nodes dictionary, calculating its coordinates using offset
+
+        Parameters
+        ----------
+        node   : a Node object | hashable
+        offset : float
+                 number between 0 and 1 that sets the distance
+                 from the start point at which the node will be placed
+
+        Returns
+        -------
+        Node
+        """
+        if not isinstance(node, Node):
+            node = Node(node)
+        # calculate x,y from offset considering axis start and end points
+        width = self.end[0] - self.start[0]
+        height = self.end[1] - self.start[1]
+        node.x = self.start[0] + (width * offset)
+        node.y = self.start[1] + (height * offset)
+        self.nodes[node.ID] = node
+        return node
+
+    def draw(self):
+        # draw axis
+        self.dwg.add(self.dwg.line(start=self.start, end=self.end, **self.attrs))
+        # draw my nodes
+        for node in self.nodes.values():
+            self.dwg.add(node.get_dwg())
+
+    def get_dwg(self):
+        self.draw()
+        return self.dwg
+
+    def getDwg(self):
+        warnings.warn("getDwg is deprecated in favour of the PEP8-compliant get_dwg")
+        return self.get_dwg()
+
+    def angle(self):
+        x_diff = self.end[0] - self.start[0]
+        y_diff = self.end[1] - self.start[1]
+        return atan2(y_diff, x_diff)
+
 
 class Hiveplot(object):
+    axis_cls = Axis
     """
     Base class for a Hive plot.
 
@@ -48,14 +158,35 @@ class Hiveplot(object):
 
     """
 
-    def __init__(self, filename, **kwargs):
+    def __init__(self, filename=None, origin=None, **kwargs):
         kwargs = dict(debug=True, **kwargs)
-        self.dwg = svgwrite.Drawing(filename=filename, **kwargs)
+        if filename:
+            kwargs["filename"] = filename
+        self.dwg = svgwrite.Drawing(**kwargs)
+        self.units = UnitConverter(
+            **{key: kwargs.get(key) for key in ("width", "height", "font_size")}
+        )
         self.axes = []
+        self.origin = None
+        self.coords = None
+
+        if origin:
+            self._set_origin(*origin)
+
+    def _set_origin(self, x, y):
+        self.origin = self.units.to_px(x), self.units.to_px(y)
+        self.coords = PolarPlotter(*self.origin, **self.units._kwargs())
 
     def draw_axes(self):
+        warnings.warn(
+            "draw_axes() is deprecated in favour of the more consistent draw()",
+            DeprecationWarning,
+        )
+        return self.draw()
+
+    def draw(self):
         for axis in self.axes:
-            self.dwg.add(axis.getDwg())
+            self.dwg.add(axis.get_dwg())
 
     def connect(
         self, axis0, n0_index, source_angle, axis1, n1_index, target_angle, **kwargs
@@ -108,94 +239,69 @@ class Hiveplot(object):
         pth.push("%s %s" % (n1.x, n1.y))  # target
         self.dwg.add(pth)
 
-    def save(self, fpath=None, pretty=False):
-        self.draw_axes()
-        if fpath is None:
-            self.dwg.save(pretty)
-        elif hasattr(fpath, "write"):
-            self.dwg.write(fpath, pretty)
-        else:
-            self.dwg.saveas(fpath, pretty)
-
-
-class Axis(object):
-    def __init__(self, start=(0, 0), end=(0, 0), **kwargs):
-        """Initialize Axis object with start, end positions and optional SVG attributes
-
-        Parameters
-        ----------
-        start  : ( x, y ) start point of the axis
-        end    : (x1, y1) end point of the axis
-        kwargs : extra SVG attributes for line element, optional
-                 Set or change attributes using key=value
-
-        Example
-        -------
-        >>> axis0 = Axis( (150, 200), # start
-                          (150, 0),   # end
-                          stroke="black", stroke_width=1.5) # pass SVG attributes of axes
-        
-        """
-        self.start = start
-        self.end = end
-        self.nodes = {}
-        self.dwg = svgwrite.Drawing()
-        self.attrs = kwargs
-
-    def add_node(self, node, offset):
-        """Add a Node object to nodes dictionary, calculating its coordinates using offset
-
-        Parameters
-        ----------
-        node   : a Node object
-        offset : float 
-                 number between 0 and 1 that sets the distance
-                 from the start point at which the node will be placed
-
-        """
-        # calculate x,y from offset considering axis start and end points
-        width = self.end[0] - self.start[0]
-        height = self.end[1] - self.start[1]
-        node.x = self.start[0] + (width * offset)
-        node.y = self.start[1] + (height * offset)
-        self.nodes[node.ID] = node
-
-    def draw(self):
-        # draw axis
-        self.dwg.add(self.dwg.line(start=self.start, end=self.end, **self.attrs))
-        # draw my nodes
-        for node in self.nodes.values():
-            self.dwg.add(node.getDwg())
-
-    def getDwg(self):
+    def get_dwg(self):
         self.draw()
         return self.dwg
 
-    def angle(self):
-        xDiff = self.end[0] - self.start[0]
-        yDiff = self.end[1] - self.start[1]
-        return atan2(yDiff, xDiff)
+    def save(self, fpath=None, pretty=False):
+        """Save the SVG hive plot.
 
-
-class Node(object):
-    """Base class for Node objects. 
-
-    Holds coordinates for node placement and a svgwrite.Drawing()
-    object in the *dwg* attribute.
-
-    """
-
-    def __init__(self, ID):
-        """
         Parameters
         ----------
-        ID: a unique key for the nodes dict of an axis.
+        fpath: str | Path, optional
+            Where to save the file, defaulting to the filename given on instantiation.
+        pretty: bool
+            Whether to format the SVG file before write.
         """
-        self.ID = ID
-        self.x = 0
-        self.y = 0
-        # self.r = 1.5
-        self.dwg = svgwrite.Drawing()
+        dwg = self.get_dwg()
+        if fpath is None:
+            dwg.save(pretty)
+        elif hasattr(fpath, "write"):
+            dwg.write(fpath, pretty)
+        else:
+            dwg.saveas(fpath, pretty)
 
-    def getDwg(self):
-        return self.dwg
+    def add_axis(self, start=(0, 0), end=(0, 0), **kwargs):
+        """Add axis to hive plot
+
+        Parameters
+        ----------
+        start: tuple of (str | float, str | float)
+            x and y coordinates, in any SVG unit
+        end: tuple of (str | float, str | float)
+            see ``start``
+        kwargs
+            Supplied to the Axis constructor
+
+        Returns
+        -------
+        Axis
+        """
+        start = tuple(self.units.to_px(i) for i in start)
+        end = tuple(self.units.to_px(i) for i in end)
+        ax = self.axis_cls(start, end, **kwargs)
+        self.axes.append(ax)
+        return ax
+
+    def add_axis_polar(self, start=(0, 0), end=(0, 0), use_radians=None, **kwargs):
+        """Add axis to hive plot, using polar coordinates.
+
+        Parameters
+        ----------
+        start: tuple of (str | float, float)
+            radius and angle coordinates, with radius in any SVG unit
+            and angle from the 12 o'clock position
+        end: tuple of (str | float, float)
+            see ``start``
+        use_radians: bool, optional
+            Whether the angle is in radians (default True)
+        kwargs
+            Supplied to the Axis constructor
+
+        Returns
+        -------
+        Axis
+        """
+        start = self.coords(*start, use_radians=use_radians)
+        end = self.coords(*end, use_radians=use_radians)
+        return self.add_axis(start, end, **kwargs)
