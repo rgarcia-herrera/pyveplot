@@ -96,7 +96,7 @@ a0_color = Color('#ffee00')
 a2_color = Color('#5a004c')
 a3_color = Color('#336699')
 # place nodes on axes
-print "place nodes on axes"
+print("place nodes on axes")
 for n,d in sorted_dg:
     nd = Node(n)
 
@@ -222,5 +222,5 @@ for e in g.edges():
                   fill='none')
 
 
-print "writing file"
+print("writing file")
 h.save()
