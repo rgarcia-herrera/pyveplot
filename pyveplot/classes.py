@@ -3,7 +3,7 @@ import svgwrite
 from math import sin, cos, atan2, radians, sqrt
 
 
-class Hiveplot:
+class Hiveplot(object):
     """
     Base class for a Hive plot.
 
@@ -49,7 +49,7 @@ class Hiveplot:
     """
 
     def __init__(self, filename, **kwargs):
-        kwargs = {"debug": True, **kwargs}
+        kwargs = dict(debug=True, **kwargs)
         self.dwg = svgwrite.Drawing(filename=filename, **kwargs)
         self.axes = []
 
@@ -118,7 +118,7 @@ class Hiveplot:
             self.dwg.saveas(fpath, pretty)
 
 
-class Axis:
+class Axis(object):
     def __init__(self, start=(0, 0), end=(0, 0), **kwargs):
         """Initialize Axis object with start, end positions and optional SVG attributes
 
@@ -177,7 +177,7 @@ class Axis:
         return atan2(yDiff, xDiff)
 
 
-class Node:
+class Node(object):
     """Base class for Node objects. 
 
     Holds coordinates for node placement and a svgwrite.Drawing()
