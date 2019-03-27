@@ -13,8 +13,7 @@ turn contain an arbitrary number of *Node* objects, and a method
 to connect them.
 """
 import svgwrite
-from svgwrite import cm, mm
-from math import sin, cos, atan2, degrees, radians, tan, sqrt
+from math import sin, cos, atan2, radians, sqrt
 
 
 class Hiveplot:
@@ -62,8 +61,9 @@ class Hiveplot:
 
     """
 
-    def __init__(self, filename):
-        self.dwg = svgwrite.Drawing(filename=filename, debug=True)
+    def __init__( self, filename, **kwargs):
+        kwargs = {"debug": True, **kwargs}
+        self.dwg = svgwrite.Drawing(filename=filename, **kwargs)
         self.axes = []
 
     def draw_axes(self):
@@ -121,9 +121,14 @@ class Hiveplot:
         pth.push("%s %s" % (n1.x, n1.y))  # target
         self.dwg.add(pth)
 
-    def save(self):
+    def save(self, fpath=None, pretty=False):
         self.draw_axes()
-        self.dwg.save()
+        if fpath is None:
+            self.dwg.save(pretty)
+        elif hasattr(fpath, "write"):
+            self.dwg.write(fpath, pretty)
+        else:
+            self.dwg.saveas(fpath, pretty)
 
 
 class Axis:
