@@ -14,4 +14,8 @@ to connect them.
 """
 from pyveplot.classes import Hiveplot, Axis, Node
 
+
+__version__ = "0.6.0"
+__version_info__ = tuple(int(i) for i in __version__.split('.'))
+
 __all__ = ["Hiveplot", "Axis", "Node"]
