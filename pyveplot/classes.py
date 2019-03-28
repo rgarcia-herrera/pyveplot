@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, unicode_literals, print_function
 import warnings
-
-import svgwrite
 from math import sin, cos, atan2, radians, sqrt
 
-from pyveplot.utils import UnitConverter, PolarPlotter
+import svgwrite
+
+from .utils import UnitConverter, PolarPlotter
 
 
 UNITS = UnitConverter()
@@ -158,7 +159,7 @@ class Hiveplot(object):
 
     """
 
-    def __init__(self, filename=None, origin=None, **kwargs):
+    def __init__(self, filename=None, center=None, **kwargs):
         kwargs = dict(debug=True, **kwargs)
         if filename:
             kwargs["filename"] = filename
@@ -167,15 +168,15 @@ class Hiveplot(object):
             **{key: kwargs.get(key) for key in ("width", "height", "font_size")}
         )
         self.axes = []
-        self.origin = None
+        self.center = None
         self.coords = None
 
-        if origin:
-            self._set_origin(*origin)
+        if center:
+            self._set_center(*center)
 
-    def _set_origin(self, x, y):
-        self.origin = self.units.to_px(x), self.units.to_px(y)
-        self.coords = PolarPlotter(*self.origin, **self.units._kwargs())
+    def _set_center(self, x, y):
+        self.center = self.units.to_px(x), self.units.to_px(y)
+        self.coords = PolarPlotter(*self.center, **self.units._kwargs())
 
     def draw_axes(self):
         warnings.warn(

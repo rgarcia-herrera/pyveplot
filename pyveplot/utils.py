@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, unicode_literals, print_function
 from numbers import Number
 from math import sqrt
 
@@ -75,7 +76,7 @@ class UnitConverter(object):
         return val * self.table[detected_unit]
 
     def from_px(self, val, unit):
-        """Convert the give px value into the requested unit.
+        """Convert the given px value into the requested unit.
 
         If the passed ``unit`` is None, the px value will be returned as a float.
 
@@ -94,7 +95,7 @@ class UnitConverter(object):
 
         Returns
         -------
-
+        float | str | np.ndarray
         """
         converted = float(val) / self.table[unit]
         if isinstance(val, Number) and unit:
@@ -103,6 +104,22 @@ class UnitConverter(object):
             return converted
 
     def __call__(self, val, tgt=None, src=None):
+        """Convert length from any unit to any other unit.
+
+        Parameters
+        ----------
+        val: float | str
+            value to convert, as a string (with/without units), a number,
+            or numpy array of numbers
+        tgt: str, optional
+            target unit to convert to, default px (returns number)
+        src: str, optional
+            source unit to convert from (ignored if val is a string with units)
+
+        Returns
+        -------
+        float | str | np.ndarray
+        """
         return self.from_px(self.to_px(val, src), tgt)
 
     def _kwargs(self):
@@ -120,9 +137,9 @@ class PolarPlotter(object):
         Parameters
         ----------
         x: float | str
-            x location of origin, in any SVG units
+            x location of pole, in any SVG units
         y: float | str
-            y location of origin, in any SVG units
+            y location of pole, in any SVG units
         use_radians: bool, optional
             Whether to use radians for angles by default (default True)
         kwargs:
@@ -153,7 +170,7 @@ class PolarPlotter(object):
             x, y coordinates in px/user units from the top left
         """
         if use_radians is None:
-            angle = self.use_radians
+            use_radians = self.use_radians
         if not use_radians:
             angle = radians(angle)
 
