@@ -1,3 +1,7 @@
+This project is archived. Current development moved to GitLab:
+
+https://gitlab.com/rgarcia-herrera/pyveplot
+
 Pyveplot
 ========
 
