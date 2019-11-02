@@ -1,0 +1,6 @@
+svgwrite
+numpy
+networkx
+pytest
+tox
+black; python_version >= "3.6"
